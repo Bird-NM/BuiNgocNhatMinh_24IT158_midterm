@@ -1,3 +1,4 @@
+
 #ifndef LS_H
 #define LS_H
 
@@ -7,6 +8,7 @@
 typedef struct
 {
     char name[256];
+    char path[4096];
     struct stat info;
 } FileInfo;
 
