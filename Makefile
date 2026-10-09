@@ -24,3 +24,7 @@ clean:
 rebuild: clean all
 
 .PHONY: all clean rebuild
+test:
+	sh tests/test.sh
+
+.PHONY: test
