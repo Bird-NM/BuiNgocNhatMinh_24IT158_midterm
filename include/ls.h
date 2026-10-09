@@ -4,10 +4,11 @@
 
 #include <sys/stat.h>
 #include "options.h"
+#include <limits.h>
 
 typedef struct
 {
-    char name[256];
+char name[NAME_MAX + 1];
     char path[4096];
     struct stat info;
 } FileInfo;
