@@ -1,14 +1,14 @@
 #!/bin/sh
 
-Automated tests for myls on NetBSD
-Run from the project root: sh tests/test.sh
+#Automated tests for myls on NetBSD
+#Run from the project root: sh tests/test.sh
 
 PROGRAM="./myls"
 PASS=0
 FAIL=0
 TEST_DIR="./tests/test_data"
 
-Check that the program exists
+#Check that the program exists
 
 if [ ! -x "$PROGRAM" ]; then
 echo "ERROR: $PROGRAM not found or not executable."
@@ -16,7 +16,7 @@ echo "Run 'make' first."
 exit 1
 fi
 
-Create test data
+#Create test data
 
 rm -rf "$TEST_DIR"
 mkdir -p "$TEST_DIR/subdir"
@@ -26,7 +26,7 @@ printf "This is a larger test file.\n" > "$TEST_DIR/large.txt"
 printf "hidden\n" > "$TEST_DIR/.hidden"
 printf "child\n" > "$TEST_DIR/subdir/child.txt"
 
-Helper: run a test and check the exit status
+#Helper: run a test and check the exit status
 
 run_test() {
 name="$1"
@@ -42,7 +42,7 @@ fi
 
 }
 
-Helper: run myls against the test directory and check for a name
+#Helper: run myls against the test directory and check for a name
 
 check_contains() {
 name="$1"
@@ -59,7 +59,7 @@ fi
 
 }
 
-Helper: run myls against the test directory and check that a name is absent
+#Helper: run myls against the test directory and check that a name is absent
 
 check_absent() {
 name="$1"
@@ -125,7 +125,7 @@ echo "===== Test summary ====="
 echo "Passed: $PASS"
 echo "Failed: $FAIL"
 
-Remove generated test data
+#Remove generated test data
 
 rm -rf "$TEST_DIR"
 
