@@ -19,7 +19,7 @@ $(TARGET): $(OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	del /Q src\*.o myls.exe 2>nul
+	rm -f src/*.o myls myls.exe
 
 rebuild: clean all
 
