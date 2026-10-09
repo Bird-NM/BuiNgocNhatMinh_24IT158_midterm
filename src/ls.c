@@ -26,12 +26,6 @@
 #define NAME_MAX 255
 #endif
 
-typedef struct
-{
-    char name[NAME_MAX + 1];
-    char path[PATH_MAX];
-    struct stat info;
-} FileInfo;
 
 static const Options *current_options;
 
