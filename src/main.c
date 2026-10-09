@@ -4,7 +4,6 @@
 
 int main(int argc, char *argv[])
 {
-    printf("version 2\n");
 
     Options opt;
 

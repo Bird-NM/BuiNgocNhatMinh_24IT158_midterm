@@ -6,6 +6,8 @@ void init_options(Options *opt)
 {
     opt->show_all = 0;
     opt->almost_all = 0;
+    opt->reverse = 0;
+    opt->sort_time = 0;
 }
 
 void parse_options(int argc, char *argv[], Options *opt)
@@ -21,6 +23,14 @@ void parse_options(int argc, char *argv[], Options *opt)
         if (strcmp(argv[i], "-A") == 0)
         {
             opt->almost_all = 1;
+        }
+        if (strcmp(argv[i], "-r") == 0)
+        {
+            opt->reverse = 1;
+        }
+        if (strcmp(argv[i], "-t") == 0)
+        {
+            opt->sort_time = 1;
         }
     }
 }

@@ -7,9 +7,23 @@
 
 int compare_names(const void *a, const void *b)
 {
-    return strcmp(
-        (const char *)a,
-        (const char *)b);
+    const FileInfo *fa = a;
+    const FileInfo *fb = b;
+
+    return strcmp(fa->name, fb->name);
+}
+int compare_time(const void *a, const void *b)
+{
+    const FileInfo *fa = a;
+    const FileInfo *fb = b;
+
+    if (fa->info.st_mtime < fb->info.st_mtime)
+        return 1;
+
+    if (fa->info.st_mtime > fb->info.st_mtime)
+        return -1;
+
+    return 0;
 }
 
 void list_directory(const char *path, const Options *opt)
@@ -24,7 +38,7 @@ void list_directory(const char *path, const Options *opt)
 
     struct dirent *entry;
 
-    char files[1000][256];
+    FileInfo files[1000];
     int count = 0;
 
     while ((entry = readdir(dir)) != NULL)
@@ -32,7 +46,7 @@ void list_directory(const char *path, const Options *opt)
         /* -a */
         if (opt->show_all)
         {
-            strcpy(files[count], entry->d_name);
+            strcpy(files[count].name, entry->d_name);
             count++;
             continue;
         }
@@ -46,7 +60,7 @@ void list_directory(const char *path, const Options *opt)
                 continue;
             }
 
-            strcpy(files[count], entry->d_name);
+            strcpy(files[count].name, entry->d_name);
             count++;
             continue;
         }
@@ -57,20 +71,50 @@ void list_directory(const char *path, const Options *opt)
             continue;
         }
 
-        strcpy(files[count], entry->d_name);
+        strcpy(files[count].name, entry->d_name);
+
+        char fullpath[512];
+        snprintf(fullpath,
+                 sizeof(fullpath),
+                 "%s/%s",
+                 path,
+                 entry->d_name);
+
+        stat(fullpath, &files[count].info);
+
         count++;
     }
 
     closedir(dir);
 
-    qsort(
-        files,
-        count,
-        sizeof(files[0]),
-        compare_names);
-
-    for (int i = 0; i < count; i++)
+    if (opt->sort_time)
     {
-        printf("%s\n", files[i]);
+        qsort(
+            files,
+            count,
+            sizeof(files[0]),
+            compare_time);
+    }
+    else
+    {
+        qsort(
+            files,
+            count,
+            sizeof(files[0]),
+            compare_names);
+    }
+    if (opt->reverse)
+    {
+        for (int i = count - 1; i >= 0; i--)
+        {
+            printf("%s\n", files[i].name);
+        }
+    }
+    else
+    {
+        for (int i = 0; i < count; i++)
+        {
+            printf("%s\n", files[i].name);
+        }
     }
 }
