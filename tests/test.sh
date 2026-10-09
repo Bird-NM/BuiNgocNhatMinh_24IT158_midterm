@@ -78,18 +78,18 @@ fi
 
 echo "===== myls automated tests ====="
 
-1. Default listing
+#1. Default listing
 
 check_contains "Default listing shows normal files" "small.txt"
 check_absent "-a is not enabled by default" ".hidden"
 
-2. Hidden files
+#2. Hidden files
 
 check_contains "-a shows hidden files" ".hidden" -a
 check_contains "-A shows hidden files" ".hidden" -A
 check_absent "-A excludes dot entry" "./" -A
 
-3. Listing options
+#3. Listing options
 
 run_test "-c runs successfully" -c "$TEST_DIR"
 run_test "-d runs successfully" -d "$TEST_DIR"
@@ -108,17 +108,17 @@ run_test "-s runs successfully" -s "$TEST_DIR"
 run_test "-t runs successfully" -t "$TEST_DIR"
 run_test "-u runs successfully" -u "$TEST_DIR"
 
-4. Recursive listing
+#4. Recursive listing
 
 check_contains "-R lists files in subdirectories" "child.txt" -R
 
-5. Combined options
+#5. Combined options
 
 run_test "Combined -la options" -l -a "$TEST_DIR"
 run_test "Combined -lS options" -l -S "$TEST_DIR"
 run_test "Combined -ir options" -i -r "$TEST_DIR"
 
-6. Summary
+#6. Summary
 
 echo
 echo "===== Test summary ====="
